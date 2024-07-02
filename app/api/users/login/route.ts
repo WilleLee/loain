@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
+import { errors } from "@/constants/errors";
 
 export const dynamic = "force-dynamic";
 
@@ -10,10 +11,17 @@ export async function POST() {
     const JWT_SECRET = process.env.JWT_SECRET as string;
     const loginToken = cookies().get("login-token")?.value;
 
+    console.log("loginToken", loginToken);
+
     if (!loginToken) {
       return NextResponse.json(
-        { error: "정상적인 접근이 아닙니다." },
-        { status: 401 },
+        {
+          error: {
+            message: errors.USERS.NO_LOGIN_TOKEN.message,
+            code: errors.USERS.NO_LOGIN_TOKEN.code,
+          },
+        },
+        { status: errors.USERS.NO_LOGIN_TOKEN.status },
       );
     }
 
@@ -21,8 +29,13 @@ export async function POST() {
 
     if (!email) {
       return NextResponse.json(
-        { error: "정상적인 접근이 아닙니다." },
-        { status: 401 },
+        {
+          error: {
+            message: errors.USERS.NO_LOGIN_TOKEN.message,
+            code: errors.USERS.NO_LOGIN_TOKEN.code,
+          },
+        },
+        { status: errors.USERS.NO_LOGIN_TOKEN.status },
       );
     }
 
@@ -38,6 +51,14 @@ export async function POST() {
     //   { status: 200 },
     // );
   } catch (err) {
-    return NextResponse.json({ error: "다시 시도해주세요." }, { status: 500 });
+    return NextResponse.json(
+      {
+        error: {
+          message: errors.COMMON.SERVER.message,
+          code: errors.COMMON.SERVER.code,
+        },
+      },
+      { status: errors.COMMON.SERVER.status },
+    );
   }
 }

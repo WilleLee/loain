@@ -8,6 +8,10 @@ const config: Config = {
   ],
   darkMode: "selector",
   theme: {
+    boxShadow: {
+      light: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
+      dark: "0 0 5px 0 rgba(122, 122, 122, 0.3)",
+    },
     screens: {
       xs: "420px",
     },
@@ -131,6 +135,8 @@ const config: Config = {
       darkLayeredBackground: "#f9fafb",
       floatBackground: "#ffffff",
       darkFloatBackground: "#f2f4f6",
+      discord: "#5764f2",
+      brand: "#009959",
     },
   },
   plugins: [],

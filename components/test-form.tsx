@@ -1,36 +1,39 @@
 "use client";
 
-import { GlobalPortal } from "@app/global-portal";
 import { helloWorld } from "@libs/actions";
 import nProgress from "nprogress";
 import { ChangeEvent, useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
+import Button from "./button";
 
 export default function TestForm() {
-  const { register, reset } = useForm<{ hello: string }>();
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  const [message, setMessage] = useState("");
-  const handleSubmit = useCallback(
-    async (formData: FormData) => {
+  const [pending, setPending] = useState(false);
+  const { register, handleSubmit, reset } = useForm<{ hello: string }>({
+    defaultValues: {
+      hello: "",
+    },
+  });
+
+  const onSubmit = useCallback(
+    async (formData: { hello: string }) => {
       nProgress.start();
-      const { isSuccessful, error, data, code } = await helloWorld(formData);
+      setPending(true);
+      const { isSuccessful, data, error } = await helloWorld(formData.hello);
       if (!isSuccessful) {
-        setMessage("");
-        setErrorMessage(`${error} ${code}`);
-        reset({
-          hello: "",
-        });
-      } else {
-        setMessage(data as string);
-        setErrorMessage("");
+        alert(error);
+      } else if (!!data) {
+        alert(data);
       }
       nProgress.done();
+      reset();
+      setPending(false);
     },
     [reset],
   );
+
   return (
     <>
-      <form action={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <input
           className="text-grey-900"
           placeholder="world를 입력하세요."
@@ -43,20 +46,19 @@ export default function TestForm() {
               e.target.value = e.target.value
                 .replace(/^\s+/, "")
                 .replace(/\s+/g, " ");
-              setMessage("");
             },
           })}
         />
-        <button aria-label="제출" type="submit">
+        <Button
+          aria-label="제출"
+          type="submit"
+          disabled={pending}
+          aria-disabled={pending}
+          fullWidth={false}
+        >
           제출
-        </button>
+        </Button>
       </form>
-      {message.length > 0 && <p>{message}</p>}
-      {errorMessage.length > 0 && (
-        <GlobalPortal>
-          <p className="text-red-400">{errorMessage}</p>
-        </GlobalPortal>
-      )}
     </>
   );
 }

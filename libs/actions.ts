@@ -1,11 +1,15 @@
-"use server";
-
 import { fetcher } from "./fetcher";
 
-export async function helloWorld(formData: FormData) {
-  const hello = formData.get("hello") as string;
-  const reqObj = { hello } as any;
-  const response = await fetcher("POST", "/hello", reqObj);
+export async function helloWorld(hello: string) {
+  const reqObj = {
+    hello,
+  } as any;
+  const response = await fetcher<string>("POST", "/hello", reqObj);
 
   return response;
+}
+
+export async function login() {
+  const DISCORD_URL = process.env.NEXT_PUBLIC_DISCORD_GENERATED_URL as string;
+  window.location.href = DISCORD_URL;
 }

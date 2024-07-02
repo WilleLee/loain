@@ -1,11 +1,13 @@
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
+// import { cookies } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
   try {
+    console.log("auth starts");
     const CLIENT_ID = process.env.DISCORD_CLIENT_ID as string;
     const CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET as string;
     const TOKEN_API = process.env.DISCORD_TOKEN_API as string;
@@ -40,6 +42,8 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    console.log("email", email);
+
     const loginToken = jwt.sign(
       {
         email,
@@ -49,6 +53,12 @@ export async function POST(req: NextRequest) {
         expiresIn: "1h",
       },
     );
+
+    // cookies().set("login-token", loginToken, {
+    //   expires: new Date(Date.now() + 1000 * 60 * 60),
+    // });
+
+    console.log("loginToken", loginToken);
 
     return NextResponse.json(loginToken, {
       status: 200,

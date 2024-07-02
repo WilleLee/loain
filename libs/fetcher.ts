@@ -11,7 +11,7 @@ const axiosMethods: Record<Method, "get" | "post" | "patch" | "delete"> = {
   DELETE: "delete",
 };
 
-const apibase = process.env.API_BASE as string;
+const apibase = process.env.NEXT_PUBLIC_API_BASE as string;
 
 const instance = axios.create({
   timeout: 5000,
