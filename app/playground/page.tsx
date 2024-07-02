@@ -2,6 +2,7 @@ import Button from "@components/button";
 import Header from "@components/header";
 import Input from "@components/input";
 import Characters from "@components/playground/characters";
+import News from "@components/playground/news";
 import DateInputLoader from "@components/playground/test-date-input";
 import TestForm from "@components/test-form";
 import Text from "@components/text";
@@ -174,6 +175,9 @@ export default function PlaygroundPage() {
         </div>
         <Suspense fallback={<div>loading...</div>}>
           <Characters />
+        </Suspense>
+        <Suspense fallback={<div>loading...</div>}>
+          <News />
         </Suspense>
       </div>
     </>

@@ -136,6 +136,8 @@ const config: Config = {
       floatBackground: "#ffffff",
       darkFloatBackground: "#f2f4f6",
       discord: "#5764f2",
+      discordHover: "#4c5bd2",
+      discordActive: "#424ebf",
       brand: "#009959",
     },
   },

@@ -25,19 +25,19 @@ export default function Header() {
           <Link href="/" scroll={false}>
             <Image
               src="/favicon.ico"
-              width="32"
-              height="32"
+              width="42"
+              height="42"
               alt="favicon"
               priority
             />
           </Link>
         </div>
-        <div className={clsx("flex items-center")}>
-          <Suspense fallback={<button></button>}>
-            <LoginButton />
-          </Suspense>
+        <div className={clsx("flex items-center gap-[16px]")}>
           <Suspense fallback={<ThemeButtonSkeleton />}>
             <ThemeButton />
+          </Suspense>
+          <Suspense fallback={<button>로그인</button>}>
+            <LoginButton />
           </Suspense>
         </div>
       </div>

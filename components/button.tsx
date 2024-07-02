@@ -4,7 +4,7 @@ import { ButtonHTMLAttributes, ReactNode, Ref, forwardRef } from "react";
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   fullWidth?: boolean;
-  buttonType?: "primary" | "secondary" | "alert";
+  buttonType?: "primary" | "secondary" | "alert" | "discord";
 }
 
 const Button = forwardRef(function Button(
@@ -31,6 +31,8 @@ const Button = forwardRef(function Button(
             buttonType === "secondary",
           "bg-red-500 hover:bg-red-600 active:bg-red-700":
             buttonType === "alert",
+          "bg-discord hover:bg-discordHover active:bg-discordActive":
+            buttonType === "discord",
         },
       )}
       {...rest}

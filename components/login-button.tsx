@@ -1,19 +1,28 @@
 "use client";
 
 import { login } from "@libs/actions";
-import clsx from "clsx";
+import Button from "./button";
+import { useState } from "react";
 
 export default function LoginButton() {
+  const [pending, setPending] = useState(false);
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
+        setPending(true);
         login();
+        setPending(false);
       }}
     >
-      <button className={clsx("bg-discord")} type="submit">
-        login
-      </button>
+      <Button
+        type="submit"
+        buttonType="discord"
+        aria-disabled={pending}
+        disabled={pending}
+      >
+        로그인
+      </Button>
     </form>
   );
 }

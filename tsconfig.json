@@ -18,6 +18,8 @@
       }
     ],
     "paths": {
+      "@assets/*": ["./assets/*"],
+      "@constants/*": ["./constants/*"],
       "@api/*": ["./app/api/*"],
       "@components/*": ["./components/*"],
       "@hooks/*": ["./hooks/*"],

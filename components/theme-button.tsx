@@ -1,11 +1,14 @@
 "use client";
 
 import { useThemeStore } from "@libs/zustand/theme/use-theme-store";
+import { SunIcon } from "@heroicons/react/24/outline";
+import { MoonIcon } from "@heroicons/react/20/solid";
 
 export default function ThemeButton() {
   const { toggleTheme, theme } = useThemeStore();
   return (
     <button
+      className="inline-flex w-[26px] items-center justify-center"
       onClick={() => {
         if (theme === "dark") {
           localStorage.setItem("theme", "light");
@@ -17,12 +20,7 @@ export default function ThemeButton() {
       aria-label="테마 변경 버튼"
       title="테마 변경"
     >
-      {/* <div className="h-[38px] w-[74px] rounded-[24px] bg-grey-100 p-[5px] dark:bg-grey-800">
-        <div className="relative h-full w-full rounded-[24px] bg-grey-300 dark:bg-blue-300">
-          <div className="absolute left-[4px] top-[50%] h-[24px] w-[24px] -translate-y-[50%] rounded-[50%] bg-grey-700 transition-all dark:left-[36px] dark:bg-grey-300" />
-        </div>
-      </div> */}
-      light/dark
+      {theme === "dark" ? <MoonIcon /> : <SunIcon />}
     </button>
   );
 }

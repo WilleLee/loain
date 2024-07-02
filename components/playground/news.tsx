@@ -3,14 +3,18 @@
 import { fetcher } from "@libs/fetcher";
 import { useEffect } from "react";
 
-export default function Characters() {
+export default function () {
   useEffect(() => {
     let isValidCall = true;
+
     (async () => {
-      const r = await fetcher("GET", "/lostark");
+      const { isSuccessful, data } = await fetcher("GET", "/lostark/news");
       if (!isValidCall) return;
-      console.log("r", r);
+      if (isSuccessful && !!data) {
+        console.log("news data", data);
+      }
     })();
+
     return () => {
       isValidCall = false;
     };
