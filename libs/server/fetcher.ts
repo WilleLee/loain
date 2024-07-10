@@ -35,6 +35,7 @@ instance.interceptors.response.use(
     return response;
   },
   function (err) {
+    console.error(err);
     const errObj = {
       error: err.response?.data?.error?.message || "다시 시도해주세요.",
       code: err.response?.data?.error?.code || "00000",

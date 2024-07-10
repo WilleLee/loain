@@ -1,23 +1,25 @@
-"use client";
+import Text from "@components/text";
+import { getLostartNotice } from "@libs/data";
 
-import { fetcher } from "@libs/fetcher";
-import { useEffect } from "react";
+export default async function TestNews() {
+  const { news, error } = await getLostartNotice();
 
-export default function TestNews() {
-  useEffect(() => {
-    let isValidCall = true;
+  if (news === null)
+    return (
+      <p>
+        <Text typography="regular">{error}</Text>
+      </p>
+    );
 
-    (async () => {
-      const { isSuccessful, data } = await fetcher("GET", "/lostark/news");
-      if (!isValidCall) return;
-      if (isSuccessful && !!data) {
-        console.log("news data", data);
-      }
-    })();
-
-    return () => {
-      isValidCall = false;
-    };
-  }, []);
-  return null;
+  return (
+    <div>
+      {news.map((item, index) => (
+        <div key={index}>
+          <h3>
+            <Text typography="regular">{item.title}</Text>
+          </h3>
+        </div>
+      ))}
+    </div>
+  );
 }

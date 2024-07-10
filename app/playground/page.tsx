@@ -1,20 +1,22 @@
 import Button from "@components/button";
 import Header from "@components/header";
 import Input from "@components/input";
-import Characters from "@components/playground/characters";
 import TestDebounce from "@components/playground/test-debounce";
-import News from "@components/playground/test-news";
 import DateInputLoader from "@components/playground/test-date-input";
 import TestForm from "@components/test-form";
 import Text from "@components/text";
 import Textarea from "@components/textarea";
 import clsx from "clsx";
 import { Suspense } from "react";
+import TestNews from "@components/playground/test-news";
 
 export default function PlaygroundPage() {
   return (
     <>
       <Header />
+      <Suspense fallback={<div>loading...</div>}>
+        <TestNews />
+      </Suspense>
       <div
         className={clsx(
           "rounded-[10px] border-[2px] border-solid border-grey-600 p-[8px] dark:border-grey-300",
@@ -174,12 +176,6 @@ export default function PlaygroundPage() {
           <Button disabled>로그인</Button>
           <Button fullWidth={false}>로그인</Button>
         </div>
-        {/* <Suspense fallback={<div>loading...</div>}>
-          <Characters />
-        </Suspense>
-        <Suspense fallback={<div>loading...</div>}>
-          <News />
-        </Suspense> */}
       </div>
       <div>
         <TestDebounce />

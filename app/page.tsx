@@ -1,9 +1,16 @@
 import Header from "@components/header";
 import Text from "@components/text";
+import { fetcher } from "@libs/fetcher";
 
 export const dynamic = "force-dynamic";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const { data } = await fetcher("GET", "/", {
+    headers: {
+      Authorization: "Bearer token",
+    },
+  });
+  console.log(data);
   return (
     <>
       <Header />

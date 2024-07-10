@@ -9,7 +9,7 @@ import NProgressLoader from "./nprogress-loader";
 
 const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME as string;
 
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 
 const notoSansKR = Noto_Sans_KR({
   subsets: ["latin"],

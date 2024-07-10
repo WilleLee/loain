@@ -12,7 +12,7 @@ import {
   useState,
 } from "react";
 
-const data = [
+const data: User[] = [
   {
     name: "김철수",
     age: 20,
@@ -72,7 +72,7 @@ type ChildrenArgs = {
   handleChangeInput: (e: ChangeEvent<HTMLInputElement>) => void;
   pending: boolean;
   debouncedInput: string;
-  users: { name: string; age: number }[];
+  users: User[];
 };
 
 type ControllerProps = {
@@ -82,7 +82,7 @@ type ControllerProps = {
 function Controller({ children }: ControllerProps) {
   const [pending, setPending] = useState(false);
   const [input, setInput] = useState("");
-  const [users, setUsers] = useState<{ name: string; age: number }[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [debouncedInput, setDebouncedInput] = useState("");
   const handleChangeInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
@@ -108,11 +108,7 @@ function Controller({ children }: ControllerProps) {
   return children({ input, handleChangeInput, pending, debouncedInput, users });
 }
 
-const Users = memo(function Users({
-  users,
-}: {
-  users: { name: string; age: number }[];
-}) {
+const Users = memo(function Users({ users }: { users: User[] }) {
   return users.length > 0 ? (
     <div>
       {users.map((item, index) => (
@@ -132,3 +128,8 @@ const Users = memo(function Users({
 function Layout({ children }: { children: ReactNode }) {
   return <div className="w-full max-w-[300px]">{children}</div>;
 }
+
+type User = {
+  name: string;
+  age: number;
+};
