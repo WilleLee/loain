@@ -3,7 +3,7 @@
 import { fetcher } from "@libs/fetcher";
 import { useEffect } from "react";
 
-export default function () {
+export default function TestNews() {
   useEffect(() => {
     let isValidCall = true;
 

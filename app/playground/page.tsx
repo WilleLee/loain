@@ -2,7 +2,8 @@ import Button from "@components/button";
 import Header from "@components/header";
 import Input from "@components/input";
 import Characters from "@components/playground/characters";
-import News from "@components/playground/news";
+import TestDebounce from "@components/playground/test-debounce";
+import News from "@components/playground/test-news";
 import DateInputLoader from "@components/playground/test-date-input";
 import TestForm from "@components/test-form";
 import Text from "@components/text";
@@ -173,12 +174,15 @@ export default function PlaygroundPage() {
           <Button disabled>로그인</Button>
           <Button fullWidth={false}>로그인</Button>
         </div>
-        <Suspense fallback={<div>loading...</div>}>
+        {/* <Suspense fallback={<div>loading...</div>}>
           <Characters />
         </Suspense>
         <Suspense fallback={<div>loading...</div>}>
           <News />
-        </Suspense>
+        </Suspense> */}
+      </div>
+      <div>
+        <TestDebounce />
       </div>
     </>
   );
