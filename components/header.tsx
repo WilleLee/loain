@@ -5,8 +5,14 @@ import ThemeButton from "./theme-button";
 import { ThemeButtonSkeleton } from "./skeletons";
 import Image from "next/image";
 import LoginButton from "./login-button";
+import { unstable_noStore } from "next/cache";
+import { cookies } from "next/headers";
 
 export default function Header() {
+  unstable_noStore();
+  const accessToken = cookies().get("access-token")?.value;
+  const isLoggedin = !!accessToken;
+
   return (
     <header
       className={clsx(
@@ -36,9 +42,11 @@ export default function Header() {
           <Suspense fallback={<ThemeButtonSkeleton />}>
             <ThemeButton />
           </Suspense>
-          <Suspense fallback={<button>로그인</button>}>
-            <LoginButton />
-          </Suspense>
+          {!isLoggedin && (
+            <Suspense fallback={<button>로그인</button>}>
+              <LoginButton />
+            </Suspense>
+          )}
         </div>
       </div>
     </header>

@@ -16,10 +16,6 @@ export function middleware({ nextUrl }: NextRequest) {
     return NextResponse.redirect(new URL("/", nextUrl));
   }
 
-  if (pathname.startsWith("/auth") && !nextUrl.searchParams.has("code")) {
-    return NextResponse.redirect(new URL("/", nextUrl));
-  }
-
   for (let i = 0; i < publicOnlyRoutes.length; i++) {
     if (pathname.startsWith(publicOnlyRoutes[i]) && isLoggedin) {
       return NextResponse.redirect(new URL("/", nextUrl));

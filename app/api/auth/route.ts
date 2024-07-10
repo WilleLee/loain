@@ -7,7 +7,6 @@ export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
   try {
-    console.log("auth starts");
     const CLIENT_ID = process.env.DISCORD_CLIENT_ID as string;
     const CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET as string;
     const TOKEN_API = process.env.DISCORD_TOKEN_API as string;
@@ -42,8 +41,6 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    console.log("email", email);
-
     const loginToken = jwt.sign(
       {
         email,
@@ -54,16 +51,11 @@ export async function POST(req: NextRequest) {
       },
     );
 
-    // cookies().set("login-token", loginToken, {
-    //   expires: new Date(Date.now() + 1000 * 60 * 60),
-    // });
-
-    console.log("loginToken", loginToken);
-
     return NextResponse.json(loginToken, {
       status: 200,
     });
   } catch (err) {
+    console.log(err);
     return NextResponse.json({ error: "다시 시도해주세요." }, { status: 500 });
   }
 }

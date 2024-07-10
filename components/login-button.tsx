@@ -1,20 +1,19 @@
 "use client";
 
-import { login } from "@libs/actions";
+import { discordLogin } from "@libs/actions";
 import Button from "./button";
-import { useState } from "react";
+import { FormEvent, useCallback, useState } from "react";
 
 export default function LoginButton() {
   const [pending, setPending] = useState(false);
+  const handleSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setPending(true);
+    discordLogin();
+    setPending(false);
+  }, []);
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        setPending(true);
-        login();
-        setPending(false);
-      }}
-    >
+    <form onSubmit={handleSubmit}>
       <Button
         type="submit"
         buttonType="discord"

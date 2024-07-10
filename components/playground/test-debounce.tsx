@@ -2,6 +2,7 @@
 
 import Input from "@components/input";
 import Text from "@components/text";
+import { useDebouncedValue } from "@hooks/useDebouncedValue";
 import { delay } from "@libs/delay";
 import {
   ChangeEvent,
@@ -83,18 +84,10 @@ function Controller({ children }: ControllerProps) {
   const [pending, setPending] = useState(false);
   const [input, setInput] = useState("");
   const [users, setUsers] = useState<User[]>([]);
-  const [debouncedInput, setDebouncedInput] = useState("");
   const handleChangeInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   }, []);
-  useEffect(() => {
-    const timeoutId: NodeJS.Timeout = setTimeout(() => {
-      setDebouncedInput(input);
-    }, 1000);
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [input]);
+  const debouncedInput = useDebouncedValue(input, 1000);
   useEffect(() => {
     (async () => {
       setPending(true);

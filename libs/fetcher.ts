@@ -4,6 +4,8 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 
+import Cookies from "js-cookie";
+
 const axiosMethods: Record<Method, "get" | "post" | "patch" | "delete"> = {
   GET: "get",
   POST: "post",
@@ -24,6 +26,19 @@ const instance = axios.create({
 instance.interceptors.request.use(
   function (config: InternalAxiosRequestConfig<any>) {
     // 요청 성공 직전 호출
+    if (typeof window !== "undefined") {
+      const loginToken = Cookies.get("login-token");
+      const accessToken = Cookies.get("access-token");
+      console.log("requesting logintoken", loginToken);
+      console.log("requesting accesstoken", accessToken);
+      if (loginToken && !accessToken) {
+        config.headers.Authorization = `Bearer ${loginToken}`;
+      }
+      if (accessToken) {
+        config.headers.Authorization = `Bearer ${accessToken}`;
+      }
+    }
+
     return config;
   },
   function (err) {

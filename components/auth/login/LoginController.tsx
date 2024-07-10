@@ -1,19 +1,21 @@
 "use client";
 
-import { useEffect } from "react";
 import useInternalRouter from "@hooks/useInternalRouter";
-import { getLoginToken } from "@libs/actions";
+import { getAccessToken } from "@libs/actions";
+import { useEffect } from "react";
 
-export default function AuthController({ code }: { code: string }) {
+export default function LoginController() {
   const { replace } = useInternalRouter();
   useEffect(() => {
     let isValidEffect = true;
-    (async function () {
-      const isSuccessful = await getLoginToken(code);
+    (async () => {
+      const isSuccessful = await getAccessToken();
       if (isValidEffect) {
         if (isSuccessful) {
-          replace("/auth/login");
+          console.log("success!");
+          replace("/");
         } else {
+          console.log("failed!");
           replace("/");
         }
       }
@@ -21,6 +23,6 @@ export default function AuthController({ code }: { code: string }) {
     return () => {
       isValidEffect = false;
     };
-  }, [replace, code]);
+  }, [replace]);
   return null;
 }
