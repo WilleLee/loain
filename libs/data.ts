@@ -33,13 +33,18 @@ export async function getLoginToken(code: string) {
 }
 
 export async function getAccessToken() {
-  const { isSuccessful, data: accessToken } = await fetcher<string>(
+  const { isSuccessful, data: accessToken } = await fetcher<string | null>(
     "POST",
     "/users/login",
   );
-
+  /*
   if (isSuccessful && !!accessToken) {
     return accessToken;
   }
   return null;
+  */
+  return {
+    isSuccessful,
+    accessToken,
+  };
 }

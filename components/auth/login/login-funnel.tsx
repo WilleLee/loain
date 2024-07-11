@@ -6,21 +6,26 @@ import AuthLoginSuccess from "./login-success";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import AuthPending from "../auth-pending";
+import AuthLoginSignup from "./login-signup";
 
 export default function AuthLoginFunnel() {
   const [status, setStatus] = useState<
-    "idle" | "pending" | "success" | "error"
+    "idle" | "pending" | "success" | "error" | "signup"
   >("idle");
 
   useEffect(() => {
     (async function () {
-      const accessToken = await getAccessToken();
-      if (!accessToken) {
+      const { isSuccessful, accessToken } = await getAccessToken();
+      if (!isSuccessful) {
         setStatus("error");
       } else {
-        Cookies.remove("login-token");
-        Cookies.set("access-token", accessToken);
-        setStatus("success");
+        if (!accessToken) {
+          setStatus("signup");
+        } else {
+          Cookies.remove("login-token");
+          Cookies.set("access-token", accessToken);
+          setStatus("success");
+        }
       }
     })();
   }, []);
@@ -31,6 +36,10 @@ export default function AuthLoginFunnel() {
 
   if (status === "error") {
     return <AuthError />;
+  }
+
+  if (status === "signup") {
+    return <AuthLoginSignup />;
   }
 
   return <AuthLoginSuccess />;

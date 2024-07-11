@@ -56,8 +56,14 @@ export async function POST(req: NextRequest) {
 
     revalidatePath("/");
 
+    /*
+    accessToken: string | null;
+    -> string: 회원가입한 유저
+    -> null: 회원가입하지 않은 유저 (회원가입 필요)
+    */
+
     // test response
-    return NextResponse.json(accessToken, { status: 200 });
+    return NextResponse.json(null, { status: 200 });
 
     /*
     s2s 통신 (로그인)
