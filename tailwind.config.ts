@@ -8,6 +8,16 @@ const config: Config = {
   ],
   darkMode: "selector",
   theme: {
+    animation: {
+      "skeleton-pulse": "skeleton-pulse 1.5s ease-in-out infinite",
+    },
+    keyframes: {
+      "skeleton-pulse": {
+        "0%": { opacity: "1" },
+        "50%": { opacity: "0.5" },
+        "100%": { opacity: "1" },
+      },
+    },
     boxShadow: {
       light: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
       dark: "0 0 5px 0 rgba(122, 122, 122, 0.3)",

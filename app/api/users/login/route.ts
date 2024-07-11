@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { errors } from "@/constants/errors";
+import { revalidatePath } from "next/cache";
 
 export const dynamic = "force-dynamic";
 
@@ -52,6 +53,8 @@ export async function POST(req: NextRequest) {
     const accessToken = jwt.sign({ email }, JWT_SECRET, {
       expiresIn: "30d",
     });
+
+    revalidatePath("/");
 
     // test response
     return NextResponse.json(accessToken, { status: 200 });

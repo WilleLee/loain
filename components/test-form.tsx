@@ -1,39 +1,30 @@
 "use client";
 
 import { helloWorld } from "@libs/actions";
-import nProgress from "nprogress";
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import Button from "./button";
+import { useFormStatus } from "react-dom";
+import nProgress from "nprogress";
 
 export default function TestForm() {
-  const [pending, setPending] = useState(false);
-  const { register, handleSubmit, reset } = useForm<{ hello: string }>({
+  const { pending } = useFormStatus();
+  const { register } = useForm<{ hello: string }>({
     defaultValues: {
       hello: "",
     },
   });
 
-  const onSubmit = useCallback(
-    async (formData: { hello: string }) => {
-      nProgress.start();
-      setPending(true);
-      const { isSuccessful, data, error } = await helloWorld(formData.hello);
-      if (!isSuccessful) {
-        alert(error);
-      } else if (!!data) {
-        alert(data);
-      }
-      nProgress.done();
-      reset();
-      setPending(false);
-    },
-    [reset],
-  );
+  const handleAction = useCallback(async (formData: FormData) => {
+    nProgress.start();
+    const { data } = await helloWorld(formData);
+    console.log("data", data);
+    nProgress.done();
+  }, []);
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form action={handleAction}>
         <input
           className="text-grey-900"
           placeholder="world를 입력하세요."

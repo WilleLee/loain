@@ -6,8 +6,8 @@ export default function useInternalRouter() {
 
   return useMemo(
     () => ({
-      push: (path: Path) => router.push(path),
-      replace: (path: Path) => router.replace(path),
+      push: (path: Path) => router.push(path, { scroll: false }),
+      replace: (path: Path) => router.replace(path, { scroll: false }),
       goBack: () => router.back(),
     }),
     [router],

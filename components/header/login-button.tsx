@@ -1,7 +1,7 @@
 "use client";
 
 import { discordLogin } from "@libs/actions";
-import Button from "./button";
+import Button from "@components/button";
 import { FormEvent, useCallback, useState } from "react";
 
 export default function LoginButton() {
@@ -17,6 +17,7 @@ export default function LoginButton() {
       <Button
         type="submit"
         buttonType="discord"
+        aria-label="디스코드로 로그인하기"
         aria-disabled={pending}
         disabled={pending}
       >

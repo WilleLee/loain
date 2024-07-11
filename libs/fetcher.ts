@@ -27,15 +27,13 @@ instance.interceptors.request.use(
   function (config: InternalAxiosRequestConfig<any>) {
     // 요청 성공 직전 호출
     if (typeof window !== "undefined") {
+      console.log("client side fetching");
       const loginToken = Cookies.get("login-token");
       const accessToken = Cookies.get("access-token");
-      console.log("requesting logintoken", loginToken);
-      console.log("requesting accesstoken", accessToken);
-      if (loginToken && !accessToken) {
-        config.headers.Authorization = `Bearer ${loginToken}`;
-      }
-      if (accessToken) {
+      if (!!accessToken) {
         config.headers.Authorization = `Bearer ${accessToken}`;
+      } else if (!!loginToken) {
+        config.headers.Authorization = `Bearer ${loginToken}`;
       }
     }
 
