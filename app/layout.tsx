@@ -1,22 +1,47 @@
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 import clsx from "clsx";
 import { ReactNode, Suspense } from "react";
 import { PortalProvider } from "./global-portal";
 import ThemeInitializer from "./theme-initializer";
+import NProgressLoader from "./nprogress-loader";
 
-export const dynamic = "force-dynamic";
+const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME as string;
+
+// export const dynamic = "force-dynamic";
 
 const notoSansKR = Noto_Sans_KR({
   subsets: ["latin"],
 });
 
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#17171c" },
+  ],
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
   title: {
-    default: "로아인",
-    template: "%s | 로아인",
+    default: APP_NAME,
+    template: `%s | ${APP_NAME}`,
   },
+  appleWebApp: {
+    capable: true,
+    title: "Wille logs",
+  },
+  authors: [
+    {
+      name: "Inpyo Lee",
+      url: "https://github.com/WilleLee",
+    },
+    {
+      name: "Kwanjung Kim",
+      url: "https://github.com/KwanjungKim",
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -37,6 +62,9 @@ export default function RootLayout({
           <Suspense fallback={null}>
             <ThemeInitializer />
           </Suspense>
+          <Suspense fallback={null}>
+            <NProgressLoader />
+          </Suspense>
         </Layout>
       </body>
     </html>
@@ -45,8 +73,8 @@ export default function RootLayout({
 
 function Layout({ children }: { children: ReactNode }) {
   return (
-    <div className="h-auth min-h-screen w-full max-w-full overflow-x-hidden text-grey-900 dark:text-grey-50">
-      <div className="mx-auto my-0 w-full max-w-[520px] px-[8px] py-[64px]">
+    <div className="h-auth mx-auto my-0 min-h-screen w-full max-w-[1280px] overflow-x-hidden text-grey-900 dark:text-inverseGrey-900">
+      <div className="w-full px-[8px] pb-[24px] pt-[64px] xs:px-[16px]">
         {children}
       </div>
     </div>

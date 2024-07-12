@@ -1,6 +1,7 @@
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
@@ -54,6 +55,7 @@ export async function POST(req: NextRequest) {
       status: 200,
     });
   } catch (err) {
+    console.log(err);
     return NextResponse.json({ error: "다시 시도해주세요." }, { status: 500 });
   }
 }
