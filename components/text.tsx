@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { ReactNode } from "react";
+import { CSSProperties, ReactNode } from "react";
 
 type Props = {
   children: ReactNode;
@@ -7,6 +7,7 @@ type Props = {
   textAlign?: "left" | "center" | "right";
   typography?: "light" | "regular" | "medium" | "semibold" | "bold" | "meta";
   color?: "normal" | "red";
+  style?: CSSProperties;
 };
 
 export default function Text(props: Props) {
@@ -16,6 +17,7 @@ export default function Text(props: Props) {
     textAlign = "left",
     typography = "regular",
     color = "normal",
+    style = {},
   } = props;
   return (
     <span
@@ -31,6 +33,7 @@ export default function Text(props: Props) {
         "text-grey-900 dark:text-inverseGrey-900": color === "normal",
         "text-red-300 dark:text-red-400": color === "red",
       })}
+      style={style}
     >
       {children}
     </span>

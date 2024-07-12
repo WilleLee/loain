@@ -1,19 +1,21 @@
 import { errors } from "@/constants/errors";
 import { fetcher } from "@libs/server/fetcher";
 import { MainCharacter } from "@libs/types";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
+export async function POST(req: NextRequest) {
   try {
-    const CHARACTER_NAME = "슭틔";
-    const LOA_TOKEN = process.env.TEST_LOA_TOKEN as string;
+    const { apiKey, characterName } = (await req.json()) as {
+      apiKey: string;
+      characterName: string;
+    };
 
     const charactersReq = fetcher<LostarkCharacter[]>(
       "GET",
-      `https://developer-lostark.game.onstove.com/characters/${CHARACTER_NAME}/siblings`,
+      `https://developer-lostark.game.onstove.com/characters/${characterName}/siblings`,
       {
         headers: {
-          Authorization: `Bearer ${LOA_TOKEN}`,
+          Authorization: `Bearer ${apiKey}`,
           Accept: "application/json",
         },
       },
@@ -21,10 +23,10 @@ export async function GET() {
 
     const armoriesReq = fetcher<LostarkArmory>(
       "GET",
-      `https://developer-lostark.game.onstove.com/armories/characters/${CHARACTER_NAME}`,
+      `https://developer-lostark.game.onstove.com/armories/characters/${characterName}`,
       {
         headers: {
-          Authorization: `Bearer ${LOA_TOKEN}`,
+          Authorization: `Bearer ${apiKey}`,
           Accept: "application/json",
         },
       },

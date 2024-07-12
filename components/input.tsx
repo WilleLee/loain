@@ -23,7 +23,7 @@ const Input = forwardRef(function TestInput(
       <div
         className={clsx(
           "mb-[2px] flex h-[42px] w-full items-center",
-          "shadow-light dark:shadow-dark rounded-[10px] border-[2px] border-solid transition-colors",
+          "rounded-[10px] border-[2px] border-solid shadow-light transition-colors dark:shadow-dark",
           {
             "border-transparent focus-within:border-teal-600": !error,
             "border-red-300 dark:border-red-400": !!error,
@@ -35,6 +35,7 @@ const Input = forwardRef(function TestInput(
             className={clsx(
               "w-full bg-transparent focus:outline-none",
               "text-[14px] font-normal",
+              "cursor-text disabled:cursor-not-allowed disabled:opacity-[0.34]",
               {
                 "caret-teal-600": !error,
                 "caret-red-300 dark:caret-red-400": !!error,
